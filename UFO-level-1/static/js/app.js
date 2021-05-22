@@ -3,44 +3,83 @@
 // included function names and filteredData variable
 
 // from data.js
-const tableData = data;
-
+// let tableData = data;
+console.log(data);
 // get table references where table will be inserted
+let table = d3.select("table");
 
 
-function buildTable(data) {
-  // When the page loads, it needs to display the table
-  // But if the table reloads then you may need to ensure the 
-  // previous output is cleared/overwritten from scratch 
 
-  // Think of the class activities for generating tables
 
-}
-
-function handleClick() {
-
-  // Grab the datetime value from the filter
+data.forEach(function(buildTable) {
+  //console.log(buildTable);
   
-
-  // grab all the table data and set to filteredData
   
-  // Check to see if a date was entered and filter the
-  // data using that date.
+  let row = table.append("tr");
+    
+  Object.entries(buildTable).forEach(function([key, value]) {
+ // console.log(key, value);
+  let cell = row.append("td");
+  cell.text(value);
+  });
+  });
 
 
+// Select the button
+let button = d3.select("#filter-btn");
+
+
+
+// Create event handlers 
+button.on("click", runFilter);
+
+
+// Complete the event handler function for the form
+function runFilter() {
+ 
+  // Prevent the page from refreshing
+  d3.event.preventDefault();
   
+  // Select the input element and get the raw HTML node
+  let inputElement = d3.select("#datetime");
 
+  // Get the value property of the input element
+  let inputValue = inputElement.property("value");
+  console.log(inputValue);
   
+  if (inputValue != null)
+  {
+    table.remove(data);
+    let filteredData = data.filter(entry => entry.datetime === inputValue);
+    data.forEach(function(filteredData) {
+      //console.log(filteredData);
+      let row = table.append("tr");
+      Object.entries(filteredData).forEach(function([key, value]) {
+      console.log(key, value);
+      let cell = row.append("td");
+      cell.text(value);
+      });
+      });
+    
+  }
+  else
+  {
+    table.remove(data);
+    data.forEach(function(buildTable) {
+      //console.log(buildTable);
 
-  // Rebuild the table using the filtered data
-  // @NOTE: If no date was entered, then filteredData will
-  // just be the original tableData.
-  // take your filtered data and put it into the buildTable to rebuild the table with the filtered data
-  buildTable(filteredData);
-}
+   
+      let row = table.append("tr");
+        
+      Object.entries(buildTable).forEach(function([key, value]) {
+      //console.log(key, value);
+      let cell = row.append("td");
+      cell.text(value);
+      });
+      });
+  }
 
-// Attach an event to listen for the form button that calls handleClick on a click of the filter button
+ 
 
-
-// Build the table when the page loads
-buildTable(tableData);
+};
+    
