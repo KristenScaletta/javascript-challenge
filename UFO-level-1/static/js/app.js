@@ -6,7 +6,7 @@
 // let tableData = data;
 console.log(data);
 // get table references where table will be inserted
-let table = d3.select("table");
+let table = d3.select("tbody");
 
 
 
@@ -29,23 +29,28 @@ data.forEach(function(buildTable) {
 let button = d3.select("#filter-btn");
 
 
-
 // Create event handlers 
 
 
-
+//button.on("click", clearTable);
 button.on("click", runFilter);
 
 
 
 // Complete the event handler function for the form
 function runFilter() {
- //clears table
-  table.remove(data);
+ 
+
+ 
+    
   
   // Prevent the page from refreshing
   d3.event.preventDefault();
   
+  //clear table
+  
+  table.html("");
+
   // Select the input element and get the raw HTML node
   let inputElement = d3.select("#datetime");
 
@@ -55,15 +60,13 @@ function runFilter() {
   
   if (inputValue != null)
   {
-
-   
     let filtered = data.filter(sighting => sighting.datetime === String(inputValue));
     filtered.forEach(function(filteredData) {
       console.log(filteredData);
-      let row = table.append("tr");
+      row = table.append("tr");
       Object.entries(filteredData).forEach(function([key, value]) {
       //console.log(key, value);
-      let cell = row.append("td");
+      cell = row.append("td");
       cell.text(value);
       });
       });
@@ -72,15 +75,15 @@ function runFilter() {
   else
   {
 
-    data.forEach(function(buildTable) {
+    data.forEach(function(buildTable2) {
       //console.log(buildTable);
 
    
-      let row = table.append("tr");
+      row = table.append("tr");
         
-      Object.entries(buildTable).forEach(function([key, value]) {
+      Object.entries(buildTable2).forEach(function([key, value]) {
       //console.log(key, value);
-      let cell = row.append("td");
+      cell = row.append("td");
       cell.text(value);
       });
       });
