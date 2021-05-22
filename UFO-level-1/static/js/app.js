@@ -31,12 +31,18 @@ let button = d3.select("#filter-btn");
 
 
 // Create event handlers 
+
+
+
 button.on("click", runFilter);
+
 
 
 // Complete the event handler function for the form
 function runFilter() {
- 
+ //clears table
+  table.remove(data);
+  
   // Prevent the page from refreshing
   d3.event.preventDefault();
   
@@ -49,13 +55,14 @@ function runFilter() {
   
   if (inputValue != null)
   {
-    table.remove(data);
-    let filteredData = data.filter(entry => entry.datetime === inputValue);
-    data.forEach(function(filteredData) {
-      //console.log(filteredData);
+
+   
+    let filtered = data.filter(sighting => sighting.datetime === String(inputValue));
+    filtered.forEach(function(filteredData) {
+      console.log(filteredData);
       let row = table.append("tr");
       Object.entries(filteredData).forEach(function([key, value]) {
-      console.log(key, value);
+      //console.log(key, value);
       let cell = row.append("td");
       cell.text(value);
       });
@@ -64,7 +71,7 @@ function runFilter() {
   }
   else
   {
-    table.remove(data);
+
     data.forEach(function(buildTable) {
       //console.log(buildTable);
 
